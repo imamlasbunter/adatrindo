@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdminLTE 3 | Invoice Print</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="<?php echo  base_url() ?>/assets/plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="<?php echo  base_url() ?>/assets/dist/css/adminlte.min.css">
+</head>
+<body>
+  <div class="content-wrapper">
+    <section class="content">
+         <div class="container-fluid">
+           <div class="row">
+             <div class="col-12">
+   
+               <!-- <div class="callout callout-info">
+                 <h5><i class="fas fa-info"></i> Note:</h5>
+                 This page has been enhanced for printing. Click the print button at the bottom of the invoice to test.
+               </div> -->
+   
+   
+               <!-- Main content -->
+               <div class="invoice p-3 mb-3">
+                 <!-- info row -->
+                 <div class="row invoice-info">
+                   <div class="col-sm-4 invoice-col">
+                     Date : <?php echo date('d-m-Y');?>
+                     <address>
+                       <strong><?php echo $no_invoice;?></strong><br>
+   
+                       <!-- 795 Folsom Ave, Suite 600<br>
+                       San Francisco, CA 94107<br>
+                       Phone: (804) 123-5432<br>
+                       Email: info@almasaeedstudio.com -->
+   
+                     </address>
+                   </div>
+                   <!-- /.col -->
+                 </div>
+                 <!-- /.row -->
+   
+                 <!-- Table row -->
+                 <div class="row">
+                   <div class="col-12 table-responsive">
+                     <table class="table table-striped">
+                       <thead>
+                       <tr>
+                       <th style="width: 2%" scope="col" class="text-center">No</th>
+                       <th scope="col">Product Code</th>
+                       <th scope="col">Product Name</th>
+                       <th style="width: 7%" scope="col" class="text-center">Qty</th>
+                       <th scope="col">Unit Price</th>
+                       <th scope="col">Total</th>
+                       </tr>
+                       </thead>
+                       <tbody>
+                   <?php $no = 1; foreach($invoice as $row) :?>
+                       <tr>
+                         <td><?php echo $no++;?></td>
+                         <td><?php echo $row->product_code; ?></td>
+                         <td><?php echo $row->product_name; ?></td>
+                         <td><?php echo $row->quantity; ?></td>
+                         <td><?php echo 'Rp. ' . number_format($row->unit_price, 0, ",", "."); ?></td>
+                         <td><?php $price = $row->unit_price; $qty = $row->quantity; echo 'Rp. ' . number_format(($price * $qty), 0, ",", "."); ?></td>
+                       </tr>
+   
+                      <?php endforeach;?>
+                       </tbody>
+                     </table>
+                   </div>
+                   <!-- /.col -->
+                 </div>
+                 <!-- /.row -->
+   
+                 <div class="row">
+                   <!-- accepted payments column -->
+                   <div class="col-6">
+                     <p class="lead"></p>
+                     
+   
+                     <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
+                      
+                     </p>
+                   </div>
+                   <!-- /.col -->
+                   <div class="col-6">
+                     <p class="lead"></p>
+   
+                     <div class="table-responsive">
+                       <table class="table">
+                         <tr>
+                           <th style="width:50%">Subtotal:</th>
+                           <td><?php foreach($grandTotal as $row){ echo 'Rp. ' . number_format($row->grandtotal, 0, ",", ".");}?></td>
+                         </tr>
+                        
+                       </table>
+                     </div>
+                   </div>
+                   <!-- /.col -->
+                 </div>
+                 <!-- /.row -->
+   
+                 <!-- this row will not appear when printing -->
+                 <div class="row no-print">
+                   <div class="col-12">
+                     <a href="" onclick="prinfPDF()" rel="noopener" target="_blank" class="btn btn-default float-right"><i class="fas fa-print"></i> Print</a>
+                     
+                   </div>
+                 </div>
+               </div>
+               <!-- /.invoice -->
+             </div><!-- /.col -->
+           </div><!-- /.row -->
+         </div><!-- /.container-fluid -->
+       </section>
+       <!-- /.content -->
+
+<!-- ./wrapper -->
+<!-- Page specific script -->
+<script>
+  window.addEventListener("load", window.print());
+</script>
+</body>
+</html>
